@@ -26,12 +26,12 @@ public class MainViewController implements Initializable {
 	
 	@FXML
 	private void onMenuItemSellerAction() {
-		loadView(Pages.SELLER_FORM);
+		loadView(Pages.SELLER_LIST);
 	}
 
 	@FXML
 	private void onMenuItemDepartmentAction() {
-		loadView(Pages.DEPARTMENT_FORM);
+		loadView(Pages.DEPARTMENT_LIST);
 	}
 
 	@FXML
