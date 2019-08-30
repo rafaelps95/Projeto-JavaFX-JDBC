@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import application.Main;
 import gui.util.Alerts;
 import gui.util.Pages;
 import javafx.fxml.FXML;
@@ -12,6 +13,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+import javafx.stage.Window;
 
 public class MainViewController implements Initializable {
 
@@ -41,7 +44,11 @@ public class MainViewController implements Initializable {
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
+		initializeNodes();
+	}
 
+	private void initializeNodes() {
+		
 	}
 
 	private synchronized void loadView(String absoluteName) {
