@@ -10,6 +10,7 @@ import gui.listeners.DataChangeListener;
 import gui.util.Alerts;
 import gui.util.Pages;
 import gui.util.Utils;
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -19,6 +20,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -42,10 +44,11 @@ public class DepartmentListController implements Initializable, DataChangeListen
 	private TableColumn<Department, String> tableColumnName;
 	
 	@FXML
-	private Button btNew;
+	private TableColumn<Department, Department> tableColumnEDIT;
 	
 	@FXML
-	private Button btEdit;
+	private Button btNew;
+	
 	
 	public void setDepartmentService(DepartmentService service) {
 		this.service = service;
@@ -56,12 +59,6 @@ public class DepartmentListController implements Initializable, DataChangeListen
 	@FXML
 	public void onBtNewAction(ActionEvent event) {
 		createDialogForm(new Department(), Pages.DEPARTMENT_FORM, Utils.currentStage(event));
-	}
-	
-	@FXML
-	public void onBtEditAction(ActionEvent event) {
-		Department department = tableViewDepartment.getSelectionModel().getSelectedItem();	
-		createDialogForm(department, Pages.DEPARTMENT_FORM, Utils.currentStage(event));
 	}
 	
 	@Override
@@ -81,10 +78,30 @@ public class DepartmentListController implements Initializable, DataChangeListen
 		if (service == null)
 			throw new IllegalStateException("Service was null");
 		
-		tableViewDepartment.getItems().clear();
 		List<Department> list = service.findAll();
 		obsList = FXCollections.observableArrayList(list);
 		tableViewDepartment.setItems(obsList);
+		
+		initEditButtons();
+	}
+	
+	private void initEditButtons() {
+		tableColumnEDIT.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
+		tableColumnEDIT.setCellFactory(param -> new TableCell<Department, Department>() {
+			private final Button button = new Button("Edit");
+
+			@Override
+			protected void updateItem(Department obj, boolean empty) {
+				super.updateItem(obj, empty);
+				if (obj == null) {
+					setGraphic(null);
+					return;
+				}
+				setGraphic(button);
+				button.setOnAction(
+						event -> createDialogForm(obj, Pages.DEPARTMENT_FORM, Utils.currentStage(event)));
+			}
+		});
 	}
 	
 	private void createDialogForm(Department obj, String absoluteName, Stage parentStage) {
