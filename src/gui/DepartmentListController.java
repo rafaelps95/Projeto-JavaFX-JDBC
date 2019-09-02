@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import application.Main;
+import gui.listeners.DataChangeListener;
 import gui.util.Alerts;
 import gui.util.Pages;
 import gui.util.Utils;
@@ -27,7 +28,7 @@ import javafx.stage.Stage;
 import model.entities.Department;
 import model.services.DepartmentService;
 
-public class DepartmentListController implements Initializable {
+public class DepartmentListController implements Initializable, DataChangeListener {
 	
 	private DepartmentService service;
 		
@@ -80,6 +81,7 @@ public class DepartmentListController implements Initializable {
 		if (service == null)
 			throw new IllegalStateException("Service was null");
 		
+		tableViewDepartment.getItems().clear();
 		List<Department> list = service.findAll();
 		obsList = FXCollections.observableArrayList(list);
 		tableViewDepartment.setItems(obsList);
@@ -92,9 +94,10 @@ public class DepartmentListController implements Initializable {
 			
 			DepartmentFormController controller = loader.getController();
 			controller.setDepartment(obj);
-			controller.updateFormData();
 			controller.setDepartmentService(DepartmentService.getInstance());
-			
+			controller.subscribeDataChangeListener(this);
+			controller.updateFormData();
+
 			Stage dialogStage = new Stage();
 			dialogStage.setTitle("Enter department data:");
 			dialogStage.setScene(new Scene(pane));
@@ -107,5 +110,10 @@ public class DepartmentListController implements Initializable {
 		catch (IOException e) {
 			Alerts.showAlert("IO Exception", "Error loading view", e.getMessage(), AlertType.ERROR);
 		}
+	}
+
+	@Override
+	public void onDataChange() {
+		updateTableView();		
 	}
 }
