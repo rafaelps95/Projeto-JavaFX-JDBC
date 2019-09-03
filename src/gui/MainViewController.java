@@ -14,6 +14,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.VBox;
 import model.services.DepartmentService;
+import model.services.SellerService;
 
 public class MainViewController implements Initializable {
 
@@ -28,7 +29,10 @@ public class MainViewController implements Initializable {
 	
 	@FXML
 	private void onMenuItemSellerAction() {
-		loadView(Pages.SELLER_LIST, x-> {});
+		loadView(Pages.SELLER_LIST, (SellerListController controller) -> {
+			controller.setSellerService(SellerService.getInstance());
+			controller.updateTableView();
+		});
 	}
 
 	@FXML
