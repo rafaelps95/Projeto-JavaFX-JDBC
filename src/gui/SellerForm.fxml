@@ -56,12 +56,17 @@
                   <Insets left="5.0" />
                </GridPane.margin>
             </Label>
-            <Label fx:id="labelErrorDepartment" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+            <Label fx:id="labelErrorDepartment" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="5">
+            <GridPane.margin>
+                  <Insets left="5.0" />
+               </GridPane.margin>
+            </Label>
             <TextField fx:id="txtId" disable="true" editable="false" GridPane.columnIndex="1" />
             <TextField fx:id="txtName" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <TextField fx:id="txtEmail" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <DatePicker fx:id="dpBirthDate" prefHeight="25.0" prefWidth="212.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <TextField fx:id="txtBaseSalary" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <ComboBox fx:id="comboBoxDepartment" prefHeight="25.0" prefWidth="194.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
             <HBox prefHeight="100.0" prefWidth="200.0" spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
                <children>
                   <Button fx:id="btnSave" mnemonicParsing="false" onAction="#onBtnSaveAction" text="Save">
@@ -76,7 +81,6 @@
                   </Button>
                </children>
             </HBox>
-            <ComboBox fx:id="comboBoxDepartment" prefHeight="25.0" prefWidth="194.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
          </children>
       </GridPane>
    </children>
